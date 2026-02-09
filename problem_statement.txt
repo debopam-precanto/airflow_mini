@@ -1,0 +1,250 @@
+Problem Statement
+Design and implement a minimal workflow orchestration system (similar in spirit to Airflow, but much smaller).
+The system should allow defining workflows as Directed Acyclic Graphs (DAGs), executing tasks while respecting dependencies, handling failures with retries, persisting state, exposing a Web API, supporting authentication, and executing tasks across multiple local worker processes.
+This exercise encourages the use of agentic coding tools / AI coding assistants to improve development throughput and to demonstrate effective usage of such tools during real system-building.
+
+Core Requirements
+Your system must support the following capabilities.
+
+1. Workflow (DAG) Definition
+Each workflow contains tasks.
+Each task has:
+id (string)
+
+
+command (shell command or executable function)
+
+
+dependencies (list of task ids)
+
+
+max_retries (integer)
+
+
+Example:
+{
+  "id": "example_workflow",
+  "tasks": [
+    { "id": "A", "command": "echo A", "dependencies": [] },
+    { "id": "B", "command": "echo B", "dependencies": ["A"] },
+    { "id": "C", "command": "echo C", "dependencies": ["A"] },
+    { "id": "D", "command": "echo D", "dependencies": ["B", "C"] }
+  ]
+}
+
+
+2. Task States
+At minimum:
+PENDING
+
+
+RUNNING
+
+
+SUCCESS
+
+
+FAILED
+
+
+RETRYING
+
+
+
+3. Scheduler
+The scheduler should:
+Identify runnable tasks
+
+
+Dispatch tasks for execution
+
+
+Track state transitions
+
+
+Apply retries
+
+
+
+
+
+4. Parallel Execution
+Independent tasks must execute in parallel.
+
+
+
+5. Local Multi-Node Workers
+Tasks must be executed by separate worker processes (or services) running locally.
+
+
+Scheduler should dispatch work to workers using an explicit protocol (e.g., HTTP, RPC, message queue, etc.).
+
+
+Workers report task completion/failure back to scheduler.
+
+
+
+6. Persistence
+The following must survive process restart:
+Workflow definitions
+
+
+Workflow runs
+
+
+Task states
+
+
+You may use:
+SQLite
+
+
+Local file storage
+
+
+Embedded database
+
+
+Any simple persistence mechanism
+
+
+
+
+7. Web API
+Expose minimal HTTP endpoints (design is up to you), for example:
+Register workflow
+
+
+Trigger workflow run
+
+
+Get workflow status
+
+
+Get task status
+
+
+No UI is required.
+
+8. Authentication (Not Authorization)
+API endpoints must require authentication.
+
+
+Simple mechanisms are acceptable (e.g., API key, static token, basic auth, etc.).
+
+
+No role-based authorization is required.
+
+
+
+Explicit Non-Goals
+Do not implement:
+UI
+
+
+Visualization
+
+
+Plugin system
+
+
+Distributed cluster across machines
+
+
+Authorization / RBAC
+Single-machine deployment is sufficient.
+
+Optional Enhancements (If Time Permits)
+Cancel workflow run
+
+
+Pause / resume
+
+
+Task timeout
+
+
+Structured logging
+
+
+Basic metrics
+
+
+Optional.
+
+Deliverables
+Share a Git repository containing:
+Source code
+
+
+README.md with:
+
+
+Overview
+
+
+Architecture
+
+
+Execution Flow
+
+
+Data Model
+
+
+Design Decisions
+
+
+Tradeoffs
+
+
+How to Run
+
+
+How You Used AI / Agentic Coding Tools
+
+
+What You Would Improve Next
+
+
+
+Suggested README Structure
+# Overview
+
+# Architecture
+
+# Execution Flow
+
+# Data Model
+
+# Design Decisions
+
+# Tradeoffs
+
+# How To Run
+
+# How I Used AI / Agentic Coding Tools
+
+# What I Would Improve Next
+
+
+Notes on Tool Usage
+Using AI coding assistants / agentic tools is encouraged.
+The focus is on:
+How you break down the problem
+
+
+How you interact with tools
+
+
+How you validate outputs
+
+
+How you integrate and refine generated code
+
+
+There is no expectation to limit tool usage.
+
+Submission
+Please share your repository link by Monday.
+
